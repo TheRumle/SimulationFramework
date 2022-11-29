@@ -31,6 +31,6 @@ public class BufferFactoryTests
     [TestCase(-1)]
     public void ThrowsOnNegativeValue(int value)
     {
-        Assert.Throws<Exception>(() => BufferFactory.Create<int>(value));
+        Assert.Throws<ArgumentOutOfRangeException>(() => BufferFactory.Create<int>(value));
     }
 }
