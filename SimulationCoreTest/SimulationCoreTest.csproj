@@ -6,6 +6,8 @@
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>SimulationTest</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,11 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Simulation\Simulation.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Prosumer" />
+        <ProjectReference Include="..\SimulationCore\SimulationCore.csproj" />
     </ItemGroup>
 
 </Project>

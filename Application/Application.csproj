@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Simulation\Simulation.csproj"/>
+        <ProjectReference Include="..\SimulationCore\SimulationCore.csproj" />
     </ItemGroup>
 
 </Project>

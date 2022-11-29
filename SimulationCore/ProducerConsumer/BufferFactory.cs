@@ -9,7 +9,7 @@ public class BufferFactory
         if (capacity <= 0) throw new ArgumentOutOfRangeException($"Bufferblock cannot have capacity of {capacity}.");
         return new BufferBlock<T>(new DataflowBlockOptions
         {
-            BoundedCapacity = 10
+            BoundedCapacity = capacity
         });
     }
 }
