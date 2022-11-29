@@ -7,6 +7,11 @@ public class BoxInputStartPoint : SimulationStartPoint<int>
     {
     }
 
+    public override void Produce()
+    {
+        throw new NotImplementedException();
+    }
+
     protected override int Create()
     {
         return 10;

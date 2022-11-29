@@ -5,11 +5,6 @@ namespace SimulationTest;
 
 public class BufferFactoryTests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [TestCase(1)]
     [TestCase(10)]
     [TestCase(50)]

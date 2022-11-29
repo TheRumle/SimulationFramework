@@ -16,15 +16,10 @@ public abstract class Prosumer<T> : ISimulationConsumer<T>, ISimulationProducer<
     }
 
     public BufferBlock<T> ConsumeQueue { get; set; }
-
     public TimeSpan TimeToConsume { get; set; }
-
-    public Task Consume()
-    {
-        return Task.Run(() => Thread.Sleep(TimeToConsume));
-    }
+    public abstract Task Consume();
 
     public BufferBlock<T> ProduceQueue { get; set; }
     public TimeSpan TimeToProduce { get; set; }
-    
+    public abstract void Produce();
 }

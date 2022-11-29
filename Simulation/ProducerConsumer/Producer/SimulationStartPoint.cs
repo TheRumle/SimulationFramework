@@ -19,17 +19,7 @@ public abstract class SimulationStartPoint<T> : ISimulationProducer<T>
 
     public BufferBlock<T> ProduceQueue { get; set; }
     public TimeSpan TimeToProduce { get; }
-
-
-    public void Produce()
-    {
-        for (int a = 0; a <= _maxToProduct; a++)
-        {
-            ProduceQueue.SendAsync(Create());
-            Thread.Sleep(TimeToProduce);
-        }
-    }
-
+    public abstract void Produce();
     protected abstract T Create();
 
     public static SimulationStep<T> CreateSimulationPipeLine(SimulationStartPoint<T> startPoint)
