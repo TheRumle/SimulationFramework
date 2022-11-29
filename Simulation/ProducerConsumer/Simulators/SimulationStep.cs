@@ -6,7 +6,9 @@ namespace SahptSimulation.ProducerConsumer.Simulators;
 
 public class EndStep<T> 
 {
-    
+    protected readonly List<Prosumer<T>> OldConsumers;
+    protected readonly List<ISimulationProducer<T>> Producers;
+    protected readonly BufferBlock<T> CommonQueue;
 }
 
 public class SimulationStep<T>
