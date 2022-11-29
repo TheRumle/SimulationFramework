@@ -7,15 +7,14 @@ namespace SahptSimulation.ProducerConsumer.SimulationBuilder;
 
 public class SimulationStep<T> : EndStep<T>
 {
-    private new readonly List<Prosumer<T>> _consumers;
+    private readonly List<Prosumer<T>> _consumers;
     private readonly List<ISimulationProducer<T>> _producers;
 
     private SimulationStep(List<ISimulationProducer<T>> sources, Prosumer<T> newConsumer, BufferBlock<T> sharedQueue)
         : base(newConsumer, sharedQueue)
     {
-
         _producers = sources;
-        _consumers = new List<Prosumer<T>>()
+        _consumers = new List<Prosumer<T>>
         {
             newConsumer
         };
@@ -27,7 +26,6 @@ public class SimulationStep<T> : EndStep<T>
         BufferBlock<T> sharedQueue)
         : base(newConsumers.ToList<ISimulationConsumer<T>>(), sharedQueue)
     {
-        
         _producers = sources;
         _consumers = newConsumers;
         SetupSharedQueue();
@@ -35,8 +33,8 @@ public class SimulationStep<T> : EndStep<T>
 
     private void SetupSharedQueue()
     {
-        foreach (var simulationProducer in _producers) simulationProducer.ProduceQueue = CommonQueue;
-        foreach (var simulationProducer in _consumers) simulationProducer.ConsumeQueue = CommonQueue;
+        foreach (ISimulationProducer<T> simulationProducer in _producers) simulationProducer.ProduceQueue = CommonQueue;
+        foreach (Prosumer<T> simulationProducer in _consumers) simulationProducer.ConsumeQueue = CommonQueue;
     }
 
 
@@ -48,7 +46,7 @@ public class SimulationStep<T> : EndStep<T>
         prosumer.ProduceQueue = newProduceQueue;
         return new SimulationStep<T>(_producers, prosumer, newProduceQueue);
     }
-    
+
     public SimulationStep<T> ConfigNewSimulationStep(Prosumer<T> prosumer, BufferBlock<T> sharedQueue)
     {
         /*
@@ -57,16 +55,20 @@ public class SimulationStep<T> : EndStep<T>
         return new SimulationStep<T>(_producers, prosumer, sharedQueue);
     }
 
-    public SimulationStep<T> ConfigNewSimulationStep(Prosumer<T> prosumer) =>
-        ConfigNewSimulationStep(prosumer, new BufferBlock<T>());
+    public SimulationStep<T> ConfigNewSimulationStep(Prosumer<T> prosumer)
+    {
+        return ConfigNewSimulationStep(prosumer, new BufferBlock<T>());
+    }
 
     public SimulationStep<T> ConfigNewSimulationStep(Prosumer<T> prosumer, int capacity)
-        => ConfigNewSimulationStep(prosumer, new BufferBlock<T>(new DataflowBlockOptions()
+    {
+        return ConfigNewSimulationStep(prosumer, new BufferBlock<T>(new DataflowBlockOptions
             {
                 BoundedCapacity = capacity
             }
         ));
-    
+    }
+
     public SimulationStep<T> AddConsumer(Prosumer<T> consumer)
     {
         _consumers.Add(consumer);
@@ -83,7 +85,7 @@ public class SimulationStep<T> : EndStep<T>
         SimulationStartPoint<T> startPoint,
         List<Prosumer<T>> consumeProduces)
     {
-        var producerList = new List<ISimulationProducer<T>>()
+        var producerList = new List<ISimulationProducer<T>>
         {
             startPoint
         };

@@ -1,18 +1,16 @@
 ﻿using System.Threading.Tasks.Dataflow;
-using SahptSimulation.ProducerConsumer.Consumer;
-using SahptSimulation.ProducerConsumer.Simulators;
 using SahptSimulation.ProducerConsumer.SimulationBuilder;
 
 namespace SahptSimulation.ProducerConsumer.Producer;
 
-public abstract class SimulationStartPoint<T> : ISimulationProducer<T> 
+public abstract class SimulationStartPoint<T> : ISimulationProducer<T>
 {
     private readonly int _maxToProduct;
 
     public SimulationStartPoint(TimeSpan timeToProduce, int queueSize, int maxToProduct = 10)
     {
         _maxToProduct = maxToProduct;
-        ProduceQueue = new BufferBlock<T>(new DataflowBlockOptions()
+        ProduceQueue = new BufferBlock<T>(new DataflowBlockOptions
         {
             BoundedCapacity = queueSize
         });
@@ -22,8 +20,6 @@ public abstract class SimulationStartPoint<T> : ISimulationProducer<T>
     public BufferBlock<T> ProduceQueue { get; set; }
     public TimeSpan TimeToProduce { get; }
 
-    protected abstract T Create();
-    
 
     public void Produce()
     {
@@ -33,6 +29,8 @@ public abstract class SimulationStartPoint<T> : ISimulationProducer<T>
             Thread.Sleep(TimeToProduce);
         }
     }
+
+    protected abstract T Create();
 
     public static SimulationStep<T> CreateSimulationPipeLine(SimulationStartPoint<T> startPoint)
     {

@@ -3,11 +3,10 @@ using SahptSimulation.ProducerConsumer.Consumer;
 
 namespace SahptSimulation.ProducerConsumer.Simulators;
 
-public class EndStep<T> 
+public class EndStep<T>
 {
-    public IEnumerable<ISimulationConsumer<T>> Consumers => _consumers;
-    protected readonly BufferBlock<T> CommonQueue;
     private readonly List<ISimulationConsumer<T>> _consumers;
+    protected readonly BufferBlock<T> CommonQueue;
 
     protected EndStep(List<ISimulationConsumer<T>> consumers, BufferBlock<T> commonQueue)
     {
@@ -17,9 +16,14 @@ public class EndStep<T>
 
     protected EndStep(ISimulationConsumer<T> consumer, BufferBlock<T> commonQueue)
     {
-        _consumers = new List<ISimulationConsumer<T>>(){consumer};
+        _consumers = new List<ISimulationConsumer<T>> { consumer };
         CommonQueue = commonQueue;
     }
 
-    public void AddConsumer(ISimulationConsumer<T> consumer) => _consumers.Add(consumer);
+    public IEnumerable<ISimulationConsumer<T>> Consumers => _consumers;
+
+    public void AddConsumer(ISimulationConsumer<T> consumer)
+    {
+        _consumers.Add(consumer);
+    }
 }
