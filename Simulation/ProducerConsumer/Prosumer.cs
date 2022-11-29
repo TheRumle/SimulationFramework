@@ -35,7 +35,7 @@ public class Prosumer<T> : ISimulationConsumer<T>, ISimulationProducer<T>
     
     public static Prosumer<T> Create( TimeSpan timeToConsume, TimeSpan timeToProduce, BufferBlock<T> consumeQueue, BufferBlock<T> produceQueue)
     {
-        return new Prosumer<T>(timeToConsume, timeToConsume, consumeQueue, produceQueue);
+        return new Prosumer<T>(timeToConsume, timeToProduce, consumeQueue, produceQueue);
     }   
     
     public Prosumer<TQueue> Create<TProsumer, TQueue>(
@@ -52,8 +52,6 @@ public class Prosumer<T> : ISimulationConsumer<T>, ISimulationProducer<T>
             TimeToProduce = timeToProduce,
             ProduceQueue = BufferFactory.Create<TQueue>(maxCapacity)
         };
-
-
     }
     
 }

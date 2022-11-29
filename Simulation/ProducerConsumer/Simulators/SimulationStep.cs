@@ -4,17 +4,22 @@ using SahptSimulation.ProducerConsumer.Producer;
 
 namespace SahptSimulation.ProducerConsumer.Simulators;
 
+public class EndStep<T> 
+{
+    
+}
+
 public class SimulationStep<T>
 {
-    private readonly List<Prosumer<T>> _oldConsumers;
-    private readonly List<ISimulationProducer<T>> _producers;
-    private readonly BufferBlock<T> _commonQueue;
+    protected readonly List<Prosumer<T>> OldConsumers;
+    protected readonly List<ISimulationProducer<T>> Producers;
+    protected readonly BufferBlock<T> CommonQueue;
 
     private SimulationStep(List<ISimulationProducer<T>> sources, Prosumer<T> newConsumer, BufferBlock<T> sharedQueue)
     {
-        _commonQueue = sharedQueue;
-        _producers = sources;
-        _oldConsumers = new List<Prosumer<T>>()
+        CommonQueue = sharedQueue;
+        Producers = sources;
+        OldConsumers = new List<Prosumer<T>>()
         {
             newConsumer
         };
@@ -25,16 +30,16 @@ public class SimulationStep<T>
     private SimulationStep(List<ISimulationProducer<T>> sources, List<Prosumer<T>> newConsumers,
         BufferBlock<T> sharedQueue)
     {
-        _commonQueue = sharedQueue;
-        _producers = sources;
-        _oldConsumers = newConsumers;
+        CommonQueue = sharedQueue;
+        Producers = sources;
+        OldConsumers = newConsumers;
         SetupSharedQueue();
     }
 
     private void SetupSharedQueue()
     {
-        foreach (var simulationProducer in _producers) simulationProducer.ProduceQueue = _commonQueue;
-        foreach (var simulationProducer in _oldConsumers) simulationProducer.ConsumeQueue = _commonQueue;
+        foreach (var simulationProducer in Producers) simulationProducer.ProduceQueue = CommonQueue;
+        foreach (var simulationProducer in OldConsumers) simulationProducer.ConsumeQueue = CommonQueue;
     }
 
 
@@ -42,9 +47,9 @@ public class SimulationStep<T>
         where TProsumer : Prosumer<T>, new()
     {
         var prosumer = new TProsumer();
-        prosumer.ConsumeQueue = _commonQueue;
+        prosumer.ConsumeQueue = CommonQueue;
         prosumer.ProduceQueue = newProduceQueue;
-        return new SimulationStep<T>(_producers, prosumer, newProduceQueue);
+        return new SimulationStep<T>(Producers, prosumer, newProduceQueue);
     }
     
     public SimulationStep<T> ConfigNewSimulationStep(Prosumer<T> prosumer, BufferBlock<T> sharedQueue)
@@ -52,7 +57,7 @@ public class SimulationStep<T>
         /*
          * The old producers become the new sources, the prosumer becomes the new consumer using the shared queue.
          */
-        return new SimulationStep<T>(_producers, prosumer, sharedQueue);
+        return new SimulationStep<T>(Producers, prosumer, sharedQueue);
     }
 
     public SimulationStep<T> ConfigNewSimulationStep(Prosumer<T> prosumer) =>
@@ -67,13 +72,13 @@ public class SimulationStep<T>
     
     public SimulationStep<T> AddConsumer(Prosumer<T> consumer)
     {
-        _oldConsumers.Add(consumer);
+        OldConsumers.Add(consumer);
         return this;
     }
 
     public SimulationStep<T> AddProducer(ISimulationProducer<T> producer)
     {
-        _producers.Add(producer);
+        Producers.Add(producer);
         return this;
     }
 
