@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks.Dataflow;
 using SahptSimulation.ProducerConsumer.Consumer;
 using SahptSimulation.ProducerConsumer.Simulators;
+using SahptSimulation.ProducerConsumer.SimulationBuilder;
 
 namespace SahptSimulation.ProducerConsumer.Producer;
 

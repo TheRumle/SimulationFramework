@@ -6,6 +6,6 @@ public interface ISimulationProducer<T>
 {
     public BufferBlock<T> ProduceQueue { get; set; }
     public TimeSpan TimeToProduce { get; }
-    public void Produce();
+    public void Produce() => Task.Run(() => Thread.Sleep(TimeToProduce));
 
 }
