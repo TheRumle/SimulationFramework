@@ -4,11 +4,10 @@ using SahptSimulation.ProducerConsumer.Producer;
 
 namespace SahptSimulation.ProducerConsumer;
 
-
 public abstract class Prosumer<T> : ISimulationConsumer<T>, ISimulationProducer<T>
 {
     public TimeSpan TimeToConsume { get; }
-    public abstract Task Consume();
+    public abstract void Consume();
 
     public TimeSpan TimeToProduce { get; }
     public abstract void Produce();  

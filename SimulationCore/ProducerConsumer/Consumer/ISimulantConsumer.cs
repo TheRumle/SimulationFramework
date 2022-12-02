@@ -6,5 +6,5 @@ public interface ISimulationConsumer<T>
 {
     public BufferBlock<T> ConsumeQueue { get; set; }
     public TimeSpan TimeToConsume { get; }
-    public Task Consume();
+    public void Consume();
 }

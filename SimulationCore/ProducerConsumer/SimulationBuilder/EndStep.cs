@@ -1,29 +1,24 @@
 ﻿using System.Threading.Tasks.Dataflow;
 using SahptSimulation.ProducerConsumer.Consumer;
 
-namespace SahptSimulation.ProducerConsumer.Simulators;
+namespace SahptSimulation.ProducerConsumer.SimulationBuilder;
 
 public class EndStep<T>
 {
-    private readonly List<ISimulationConsumer<T>> _consumers;
-    protected readonly BufferBlock<T> CommonQueue;
+    protected readonly List<ISimulationConsumer<T>> InternalConsumers;
+    public IReadOnlyList<ISimulationConsumer<T>> Consumers => InternalConsumers;
 
-    protected EndStep(List<ISimulationConsumer<T>> consumers, BufferBlock<T> commonQueue)
+    public readonly BufferBlock<T> CommonQueue;
+
+    protected EndStep(List<ISimulationConsumer<T>> internalConsumers, BufferBlock<T> commonQueue)
     {
-        _consumers = consumers;
+        InternalConsumers = internalConsumers;
         CommonQueue = commonQueue;
     }
 
     protected EndStep(ISimulationConsumer<T> consumer, BufferBlock<T> commonQueue)
     {
-        _consumers = new List<ISimulationConsumer<T>> { consumer };
+        InternalConsumers = new List<ISimulationConsumer<T>> { consumer };
         CommonQueue = commonQueue;
-    }
-
-    public IEnumerable<ISimulationConsumer<T>> Consumers => _consumers;
-
-    public void AddConsumer(ISimulationConsumer<T> consumer)
-    {
-        _consumers.Add(consumer);
     }
 }

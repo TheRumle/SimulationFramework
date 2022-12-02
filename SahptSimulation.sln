@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationCore", "Simulatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{961E5D16-A7D6-411F-9BBB-9ABCA1973C7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationCoreTest", "SimulationCoreTest\SimulationCoreTest.csproj", "{989BC9AC-5910-44F3-BF6D-669DF07B5D84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationCore.Test", "SimulationCore.Test\SimulationCore.Test.csproj", "{989BC9AC-5910-44F3-BF6D-669DF07B5D84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

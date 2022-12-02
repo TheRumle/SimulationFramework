@@ -12,7 +12,7 @@ public class BufferFactoryTests
     public void SetsCapacityOnCreation(int value)
     {
         BufferBlock<int> queue = BufferFactory.Create<int>(value);
-        var ints = new List<int>();
+        List<int> ints = new List<int>();
         for (int i = 0; i < value; i++)
         {
             queue.SendAsync(1).Wait();
